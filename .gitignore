@@ -1,2 +1,28 @@
-model_cache/*
+# Ignore config file in app directory
 app/config.py
+
+# Ignore all files and directories within model_cache
+model_cache/*
+
+# Example placeholders for other common exclusions
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore environment files
+.env
+env/
+venv/
+
+# Ignore IDE/editor specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore logs
+*.log
+
+# Ignore OS-specific files
+.DS_Store
