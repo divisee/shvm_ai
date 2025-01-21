@@ -1,0 +1,27 @@
+services:
+  model_service:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Dockerfile для модели
+    ports:
+      - "8000:8000"          # Проброс порта для внешнего доступа
+    runtime: nvidia          # Использование GPU
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    ipc: host
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface  # Кеш Hugging Face
+      - ./model_cache:/model_cache                    # Кеш модели
+
+  bot_service:
+    build:
+      context: ./app         # Контекст для бота (папка app)
+      dockerfile: Dockerfile # Dockerfile для бота
+    depends_on:
+      - model_service        # Зависимость от сервиса модели
+    # environment:
+    #   MODEL_URL: http://model_service:8000  # Внутренний адрес для связи с моделью
